@@ -1,5 +1,5 @@
 from flask import Flask
-from pessoas.run_pessoas import app_pessoas
+from view.pessoas.run_pessoas import app_pessoas
 
 app = Flask(__name__)
 app.register_blueprint(app_pessoas)
