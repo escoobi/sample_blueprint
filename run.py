@@ -18,7 +18,7 @@ listaPessoa = api.model('Pessoa', {
 
 class PessoaCRUD(object):
     
-    def __init__(self) -> None:
+    def __init__(self):
         self.counter = 0
         self.pessoas = []
 
@@ -26,7 +26,7 @@ class PessoaCRUD(object):
         for x in self.pessoas:
             if x["id"] == id:
                 return listaPessoa
-        ns.abort(404, "Pessoa {} não existe".format(id))
+        api.abort(404, "Pessoa {} não existe".format(id))
         
     def create(self, data):
         listaPessoa = data
@@ -41,7 +41,6 @@ class PessoaCRUD(object):
     
     def delete(self, id):
         listaPessoa = self.get(id)
-        print(listaPessoa)
         self.pessoas.remove(listaPessoa)
 
 
@@ -78,20 +77,20 @@ class Pessoa(Resource):
     @ns.marshal_with(listaPessoa)
     def get(self, id):
         '''Obtem pessoas!'''
-        return PessoaCRUD.get(id)
+        return pp.get(id)
     
     @ns.doc("Deleta Pessoa!")
     @ns.response(204, "Pessoa Deletada!")
     def delete(self, id):
         '''Delete a listaPessoa com base no Id'''
-        PessoaCRUD.delete(id)
+        pp.delete(id)
         return "", 204
     
     @ns.expect(listaPessoa)
     @ns.marshal_with(listaPessoa)
     def put(self, id):
         '''Atualiza a listaPessoa com base no Id'''
-        return PessoaCRUD.update(id, api.payload)
+        return pp.update(id, api.payload)
     
 
 if __name__ == "__main__":
